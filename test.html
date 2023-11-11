@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iPhone Latest Price List</title>
+    <style>
+      body.item-view .Blog .post-body-container {
+        padding-right: 0;
+        margin-left: 0;
+      }
+      body.item-view .Blog .post-body {
+        margin-right: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center; /* Center elements horizontally */
+        justify-content: center; /* Center elements vertically */
+        min-height: 100vh; /* Set a minimum height to fill the entire viewport */
+      }
+
+      body p {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        line-height: 20px;
+      }
+
+      h1 {
+        /* Center the heading horizontally */
+        text-align: center;
+      }
+
+      #data-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 20px;
+      }
+
+      .card {
+        width: 70%; /* Adjust the width as needed */
+        max-width: 300px; /* Set a maximum width for larger screens */
+        background-color: #a6d5cb97;
+        border: 2px solid #25a186;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 0.2em;
+        margin: 0.3em;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .card:hover {
+        transform: translateY(-7px);
+      }
+
+      img.c-phone-image {
+        width: 50%;
+        height: 75px; /* Set a fixed height for the images */
+        object-fit: contain; /* Scale down images to fit within the dimensions without cropping */
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 15px;
+        margin-bottom: 10px; /* Add margin between heading and other content */
+      }
+
+      p {
+        font-size: 14px;
+        margin: 0;
+        margin-bottom: 5px;
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+      .c-sort-option {
+        display: flex;
+        justify-content: center;
+      }
+
+      /* Media queries for responsive layout */
+
+      /* For screens smaller than 1024px */
+      @media (max-width: 600px) {
+        .card {
+          max-width: 50%; /* Cards will take the full width of the screen */
+          margin: 4px; /* Reduce margin for better spacing */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="c-sort-option">
+      <label for="sort-select">Sort By:</label>
+      <select id="sort-select">
+        <option value="none">None</option>
+        <option value="price">Price</option>
+        <option value="store">Store</option>
+        <option value="heading">Phone Name</option>
+      </select>
+    </div>
+    <div id="data-container"></div>
+
+    <script>
+      const data = [
+        {
+          heading: 'Apple iPhone 12 64 GB Red',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTG9ZekhaoB_avIrBu2lyyI8fPbQr4cYCoVT8m2YP6eJ2QZfqKItoXpLtHGCwVtO8dVQ5bsR-VNHt2OjvPq3XhDsifidEVM5lJa14tYljf3bqO6m0fnxlt9&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹39,999.00',
+          store: 'Flipkart',
+          storeLink:
+            'http://www.flipkart.com/apple-iphone-12-red-64-gb/p/itm3481e4053d500%3Fpid%3DMOBFWBYZDP6QCQ8F%26lid%3DLSTMOBFWBYZDP6QCQ8FCW2LLE%26marketplace%3DFLIPKART%26cmpid%3Dcontent_mobile_8965229628_gmc',
+        },
+        {
+          heading: 'Apple iPhone 15 - 128 GB - Green',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRU8yAIrqhmF57OBq0553iC3MrlITBGzA26A6ZAu32McEdvVU-1Msnn2ek9DPhtuiBC2Ix6h5UbWagUwrWDeEtyblLPrTalLYAWDAxbm8Z9Q72yKfT8qVhycgI&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹79,900.00',
+          store: 'Apple',
+          storeLink:
+            'https://www.apple.com/in/shop/go/product/MTP53%3Fcid%3Daos-in-seo-pla-iphone',
+        },
+        {
+          heading: 'APPLE iPhone 13 (Starlight, 128 GB) (Refurbished)',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRp7Nm5eM6dhAiVtqSrNnhaH8UZR3YvKei8MphqpWYLYSlrUYwMVuKSPB6yfAy-_szChlstcE0Nm6vPF0Cc4YImorUlsdqAsgF1QGJ74BLB519Keqb-MQcU&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹29,999.00',
+          store: 'Housekeeping Enterprises',
+          storeLink:
+            'https://www.housekeepingenterprises.com/product/apple-iphone-13-starlight-128-gb-refurbished/',
+        },
+        {
+          heading: 'Apple iPhone 13 pro Blue 256GB',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRYbXNAPtSFWhTEx_8XjfWEM8lXlirXV_mBqbRD7WUqSeJ1otNO8scoBJ5G3_zl4DVkFhH1cruRH1LRwyhoPv53-rqdcW-dkVVz3cNPvPI&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹60,500.00',
+          store: 'Tech Point',
+          storeLink:
+            'https://buy.techpoint.in/products/iphone-13-pro-blue-256gb%3Fsku_id%3D46300830',
+        },
+        {
+          heading: 'Apple iPhone X 64 GB Space Grey',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQfbNO84t4enoqyDLax0L38qBkQXPb6j-Ksfb7roK8LpM8j3yOu1xm3x1FokboGogj41rixcxUJhqeJhkK8sCqHY88MsslonB6XVqILJEgUCYu8R10-ZNKLmw&usqp=CAE',
+          description: 'Smartphone · Single SIM · 4G',
+          price: '₹19,000.00',
+          store: 'Best of Indian Products',
+          storeLink:
+            'https://boip.in/home/apple-iphone-x-64gb-certified-refurbished-very-good%3Fsrsltid%3DAfmBOorY7l9SOAWv_V_kse7Nk6o8-8YHWdaiDbwRZI9TzcK4uFjjMalt8vs',
+        },
+        {
+          heading:
+            '(Refurbished) Apple iPhone 12 (RAM - 4 GB - 128GB) - With 3 months warranty ...',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTWI5bBVmDrSNPYcxig-xv0gUhymPQgHy4blWQa_Gj_6AvCvOF484ir4LMSJiyv2zZo1fPHf3fDYqHxuk_n2XFfjPZn5F0Jh8YLKTQIuQ6Y1iFRrXDKO_Aw&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹29,990.00',
+          store: 'Shop4Deal',
+          storeLink:
+            'https://shop4deal.in/product/refurbished-apple-iphone-12-ram-4-gb-128gb-with-3-months-warranty-color-as-per-availability-condition-fair-with-copy-screen',
+        },
+        {
+          heading: 'APPLE iPhone 11 (White, 4GB,64 GB) (Refurbished)',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSbzGNlfJS7YljAq9ZNtDAlYBE00BI2K55bF2uemcqElYTtm_cW3vtfRwLodk5Rkpq8W73r7Zlo5oB_1Oc2UD-LG8aBr-EGYRgHlxG7T4rbmTFOyAuR95VjYA&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹17,999.00',
+          store: 'Housekeeping Enterprises',
+          storeLink:
+            'https://www.housekeepingenterprises.com/product/apple-iphone-11-white-4gb-gb-64gb-refurbished-buy/',
+        },
+        {
+          heading: 'Apple iPhone 13 128 GB, Pink',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQ6u7Huaa8r3tXlBTrx-58dwH0GkxMGtQTSaPczBrSswUMQhVE1Wy6KgbNHiY5Nud8fBbSmNgt-4udYD7x_XZN1r8jv6NJhaxnzcznVSOe-qjtbzF3Q9GyTdg&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹56,290.00',
+          store: 'Vijay Sales',
+          storeLink:
+            'https://www.vijaysales.com/apple-iphone-13-128-gb-storage-pink/17460',
+        },
+        {
+          heading: 'Apple iPhone 14 (128 GB, Blue)',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTwHGFf3u2gQQ3qnRoLaEQfAedADIHQfcFvioVHjXhpH4VINK0AFVjtZvEEVbLTdoLG1mo1oD0kFhn3nuwHd01MpbAz4nnUjxs5HrRFyPKstUIBTz4Dtceitj8&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹62,900.00',
+          store: 'JioMart - Electronics',
+          storeLink:
+            'https://www.jiomart.com/p/electronics/apple-iphone-14-128-gb-blue/593687859%3Fsource%3Dshoppingads',
+        },
+        {
+          heading: 'Apple iPhone 13 128 GB, Starlight',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRCF6W-uMQI2jiK0FaaUrBhQt_kpkUNsUgFA0TL0yH0Y0K5K2pBHqFY1q_eis6cREi8vr-UIGWQn9kYuPTJa_dz0qnbDIzcynbrMNUkVVHQP22bpFhedUgsxA&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹57,900.00',
+          store: 'Imagine Apple Premium Reseller',
+          storeLink:
+            'https://www.myimaginestore.com/catalog/product/view/id/4501/s/iphone-13/category/407/%3Fsrsltid%3DAfmBOorGbK663_hnr7pPxaeUJVopQ7Q1zymAWd9glfRSgikKSW9b1OanUnE',
+        },
+        {
+          heading: 'Apple iPhone 8 Rosegold 128GB',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRjjI9F0NDEPuJNeIqGj5mBouBns6Jl-nDMoC5JR8M9oqmwgvK5blnO8laAdPLlD1F4C7iiYfl7d7f14GMSrVj3HBzE5_cVWihJuestw1QQ&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹12,999.00',
+          store: 'Tech Point',
+          storeLink:
+            'https://buy.techpoint.in/products/iphone-8-rosegold-128gb%3Fsku_id%3D46540887',
+        },
+        {
+          heading: 'Apple Iphone Xr Black, 64 Gb',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTcl0Acp-by4bmebM3X8uOS7wBdObWR4EzG-jZQGQUGfBFG_XLzvB-5xdQjOlrJ9Rkr2wiAYwNaGGgj4Zpr0SZYp06ot4aA6BEdLjCgp0dMPxEPP2Z121Oa&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹19,499.00',
+          store: 'iRefurbish',
+          storeLink:
+            'https://irefurbish.in/products/iphone-xr-64gb-black-refurbished-superb-7954118639852%3Fvariant%3D43898371735788%26currency%3DINR%26utm_medium%3Dproduct_sync%26utm_source%3Dgoogle%26utm_content%3Dsag_organic%26utm_campaign%3Dsag_organic%26srsltid%3DAfmBOopupLKr9MMmjiEciBg5qMZTIXl-znlozw_hILa55OJh0JV4L1_e8iI',
+        },
+        {
+          heading: 'Apple iPhone 13 (128 GB, Green)',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQxEdgqBOlwEPxmWNiv1eEHJhxxJufS3Jmj1VeGs29SA-BAHrD2nsH4Vb8l77qGfZRc3dD3rpixddUrGXoqoqILOijEmQz0WxJibGbbO8v5grgt0KkztBvm&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹54,990.00',
+          store: 'Oxygen The Digital Expert',
+          storeLink:
+            'https://oxygendigitalshop.com/iphone-13-128gb-green-mngk3hn-a.html',
+        },
+        {
+          heading: 'Apple iPhone 14 Pro (1 TB, Gold)',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcReTvtTcgelncGGJWjaaOQY4yiqm7-aNRib1ADnZaUS2BU5mmhYN5kLoFGktz2Pf6B2_7D7y4vix19Ap7S28t0qLV_ZgM3DiuD8TEBqLALTr8jdNSferi_EkQ&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹1,79,900.00',
+          store: 'Darling Retail',
+          storeLink:
+            'https://darlingretail.com/products/iphone-14-pro-gold-1tb%3Fvariant%3D43427989192933%26currency%3DINR%26utm_medium%3Dproduct_sync%26utm_source%3Dgoogle%26utm_content%3Dsag_organic%26utm_campaign%3Dsag_organic%26srsltid%3DAfmBOoooFXs5Ie9ZSOUpl0NbwAfj4cM0jp8zjUXY5RC_e6eUdFUnwdyTPIM',
+        },
+        {
+          heading: 'Apple Iphone 11 128gb 6.1',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcROs5L45gohdhmXV0MgaDNKzhpRhbkEtY3d5Qz4DS2Jue3K6q3QP5IHtyGByp6VCaA0oi_wa56qzSTi4p89wOwPKtaarrq_cPqWeYe_J6tKueYr-xQ2poM0&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹54,900.00',
+          store: 'Fonebook',
+          storeLink:
+            'https://www.fonebook.in/product/apple-iphone-11-128gb-white/%3Fsrsltid%3DAfmBOoqvSLiZbEmwdnIp27doIGW74htk9xLFSre7_1zdyb3rEgOvgIgffOg',
+        },
+        {
+          heading: 'Apple iPhone 15 Pro - 128 GB - White Titanium',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRKqAEL_57m_aEUeVP5upduIjC3zfBjbWgz5UHqhiXCGPzFSeOjedIOW-w03z1TiT-7xw7NAoQdpdT2jXEzHzHq0JMtBw7a6KXjzSqD-Sb7NI8nmi2K0TZ2&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹1,34,900.00',
+          store: 'Placewell Retail',
+          storeLink:
+            'https://www.placewellretail.com/apple-iphone-15-pro-128-gb',
+        },
+        {
+          heading: 'Apple iPhone 15 Pro Max - 1 TB - White Titanium',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQ0em7bd-ZMGVWpw5A2BEYSkEdH_SiDwmEiNMVNO9hTN50zI2fubZOXOenEGSZ3uO1obkr7DUNkFzoL-hSs2A86y7gFkPuQBTyh5OOgaHfixV92sYX0wedy&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹1,96,499.00',
+          store: 'fliptwirls',
+          storeLink:
+            'https://www.fliptwirls.com/shop/mobile-accessories/smart-phone-tab/apple-iphone/apple-iphone-15-pro-max-white-titanium-1-tb/%3Futm_source%3DGoogle%2BShopping%26utm_medium%3Dcpc%26utm_campaign%3Dgmc',
+        },
+        {
+          heading: 'Apple iPhone 14 (128 GB, Starlight)',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRXuAQlq3iaknXJKT1Jeuo-lK8Y3zkJ1wWDGo_NjG7DEcdUzSxdoXxe91ayra7-2_yat53afTVKpJD7ON4ssmHmL0-qVpA_R0mW-qmRo_a0BbE2sqOklGvR2gA&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹67,000.00',
+          store: 'Lotus Electronics',
+          storeLink:
+            'https://www.lotuselectronics.com/product/iphones/apple-iphone-mobile-14-128gb-rom-mpur3hna-starlight-white/34551%3Fsrsltid%3DAfmBOorUchp6R7OsWTTvlJGk5d8fbW4yRTrMoT0vngMu0JfrzAUmSaCeKcg',
+        },
+        {
+          heading: 'Apple iPhone X - 64GB',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSRlR88O0zNnIehITWV4FTS8liT8g2sJbUOFCdr8m87KMpyI8nqjQPPMHmnbkQXf0QYJwECxA2Kgx0zXPbxkt6imngMR4BOYzeOQf1Jde2GiyZKQkGLcCieYA&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹14,500.00',
+          store: 'Tech Point',
+          storeLink:
+            'https://buy.techpoint.in/products/apple-iphone-x-64gb-256gb%3Fsku_id%3D46626408',
+        },
+        {
+          heading:
+            'Apple iPhone 11 - RAM-4GB - 128GB (Color as per Availability) - Refurbished ...',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTqX3kBP7Fcv9R-1M5FvBTUEHl13XL8jrWHQSIgaQEkj6cg1fZbo1Byals1voVVwRxt5yPmhevUPLOaalNmQjF-d5kq9Hh_zA63xtR-dsdxAsKBQSEub-js&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹25,990.00',
+          store: 'Shop4Deal',
+          storeLink:
+            'https://shop4deal.in/product/apple-iphone-11-ram-4gb-128gb-color-as-per-availability-refurbished-mobile-with-3-months-warranty-condition-good-with-copy-screen',
+        },
+        {
+          heading: 'Apple iPhone 12 mini | 64GB Storage | Excellent Condition',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTfYPeAjhfutBrx3b0zaIqi5Fa22s2we1OKjNSjtN37sAkVC3CdoURDBmYWg88X1Q18hVLEMLj2XVYc4XJXkLz3fYRgNl6x-RcX1rLYIVQucVMnh4IRS4vypw&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹26,999.00',
+          store: 'Zoneofdeals',
+          storeLink:
+            'https://zoneofdeals.com/product/apple-iphone-12-mini-64gb-storage-excellent-condition/',
+        },
+        {
+          heading: 'APPLE iPhone 12 Mini (Black, 64 GB)',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTp9IKgsIQBOm7vw28Xc06NDPB7SiECzWroTxcw6OxGXlFq_mlxLJj5x2Ac8JkolBSrWw6TZVwmhcIBYlbr-BWuvfTDmDXcIeTedTu7msplYkMJaZuGS5ZU&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹29,990.00',
+          store: 'Elcytec',
+          storeLink:
+            'https://elcytec.com/product/pre-owned-apple-iphone-12-mini-64gb-black/',
+        },
+        {
+          heading: 'Apple iPhone X | 64GB | Silver | Excellent Condition',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSCEtbRhAcAM2FMxl-wG5hipFPm4W2ZOKP5q33TkWj6i1fbrH9cI4o_D-_gVDGSATb3faliYZvoBme31v742e-B-laqMrV-xjE9YR5YLbSvCOjXveskafBN&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹19,999.00',
+          store: 'Zoneofdeals',
+          storeLink:
+            'https://zoneofdeals.com/product/apple-iphone-x-64gb-silver-excellent-condition/',
+        },
+        {
+          heading: 'Apple iPhone 7 Silver 256GB',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQWUGfTjIKrHMbQllvMCyL57KWsIt-GdF3LjbMd5jty7MWleGWqSMriIdSyuIZ8Ah-s0vlNUSjPlWKY6PXAJ9OCPcqvy5XYp3c2rvlwSjM&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹10,100.00',
+          store: 'Tech Point',
+          storeLink:
+            'https://buy.techpoint.in/products/iphone-7-silver-256gb%3Fsku_id%3D46463225',
+        },
+        {
+          heading: 'Apple iPhone 13 White , 128GB - Ovantica',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTpxB5W7yMnM_VflNeYLVcvQa3N1TqfEKpoSKv9t4KWyox2coqu2hpdsOpqLu-lQ-c0NiZK3d7Zz98JiJbQRhmFp4OErwSnvU5Moxh0FqdFxWbGzJrgYyuKfA&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹42,999.00',
+          store: 'Ovantica.com',
+          storeLink:
+            'https://ovantica.com/buy-refurbished-iphones/renewed-iphone-13/1349%3Fsrsltid%3DAfmBOoqt3BlziWb9xnd7DvFzkycpw3m7lTs1Q1XTxJE-jsmejFhIGXy1mSY',
+        },
+        {
+          heading:
+            'Apple iPhone 7 (32 GB) (Color as Availability) - Refurbished Phone Withe 3 Months ...',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTdBDWDhugUiFwdKE2uFGqOlc1qsO8_xQcO2TpCZT6TTUOy2pQiOChGXdolvlMQvhRAKBJ8ytqBWly6u1IkZfRT-dc5-JrcnaDGPmzor_qwwjp6K5FfkpEg&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹8,990.00',
+          store: 'Shop4Deal',
+          storeLink:
+            'https://shop4deal.in/product/apple-iphone-7-32-gb-color-as-availability-refurbished-phone-withe-3-months-warranty',
+        },
+        {
+          heading: 'Apple iPhone 12 Pro (128 GB, Graphite)',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRuUAnDp1NFNvoGX8WjWw0lNj8xvk-IMoyqdyCdYopVZUy3HqedZGLAG3ahFMe2JXVJrfBEohNyRfGNFTEuJ6l3C3d-tZ7zNutYGmChdNaeE-lkvVFDT7fBvg&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹1,09,900.00',
+          store: 'Zebrs',
+          storeLink:
+            'https://www.zebrs.com/products/apple-iphone-12-pro-graphite-128-gb-1',
+        },
+        {
+          heading: 'Apple iPhone 15 Plus - 128 GB - Blue',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQSjAz3wny1pG4ZVvy4I6sUumki2u4lpvLhwGLEHoFmjzTsCSB7k3ax8Lh0MYXtd9uln7NM8fxBHHwtgKCfzEbyRGw_Zf4sY448csHeXvrvTWsVHJ61_qSP&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹89,900.00',
+          store: 'Future World India',
+          storeLink:
+            'https://www.futureworldindia.in/apple-iphone-15-plus-128gb-blue%3Fsrsltid%3DAfmBOoomn2k4UKBG1Am0WdF665UPjICdlsq9QbjGCy4C2RQ4VfpwpgLpb5U',
+        },
+        {
+          heading: 'Apple iPhone 15 128gb black',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQmlszALU9CcE7LWZXQ8Y-aRr9r99SWLaNomc2Qomv9H0CHtLre9JdoQW_RenocLV4T-NPuofc3BzS4FZAQTJCSEkMs7SRvPu7aPNnZxrchiz-_tNNFRQY&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹77,990.00',
+          store: 'iMobiley',
+          storeLink:
+            'https://imobiley.com/product/apple-iphone-15-128gb-black/',
+        },
+        {
+          heading:
+            'Buy Refurbished Apple iPhone 11 - Refurbished - Black - 128 GB/4 GB - Fair by Cashify',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS_eik6sKc1RihRPWjiqdpPWLrC9T-jqVieeYnYPyIjxLihXzzzLJ-4rJvqDedYq0qzFRmk8TM3QKt3fo9-aYkneoKUyIPN&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹25,999.00',
+          store: 'Cashify',
+          storeLink:
+            'https://www.cashify.in/buy-refurbished-mobile-phones/renewed-apple-iphone-11/107927%3Fsrsltid%3DAfmBOooduyosAf-YIyPVuA7jCn_ozLE3pQeOnuyW88Q_VAnyaTnHdiVxKPs',
+        },
+        {
+          heading: 'Apple iPhone 11 Pro 64 GB Space Grey',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcShjHyPOxtivDLBpalERuaI8x3Gp59-NTyCdaE4s7FNxWoQcaS4rPkTO8o4w8tUUbb7dPBGwZwYAxG0YZo6YsOWepKTE-JkpWkRtiCV-9iVmTlLiMoKpzPHQw&usqp=CAE',
+          description: 'Smartphone · Single SIM · 4G',
+          price: '₹39,990.00',
+          store: 'Elcytec',
+          storeLink:
+            'https://elcytec.com/product/apple-iphone-11-pro-64gb-space-grey-open-box/',
+        },
+        {
+          heading: 'Apple iPhone 14 Pro Max (128 GB, Deep Purple)',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTQLsxP9---mW5FuhjxQY6hBXRKIRTrs2UzO2YJPer_iX4XH8G_8_NBWDUmYi9F-cATF-fAwtHwPrwEeGbo2C7C2txkm34Pbb4peJbfg7vxjvQzO8xxKiPaDg&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹1,39,900.00',
+          store: 'Manik Mobile Shopee',
+          storeLink:
+            'https://manikmobile.com/product/iphone-14-pro-max-128-gb-deep-purple/%3Futm_source%3DGoogle%2BShopping%26utm_medium%3Dcpc%26utm_campaign%3DManik%2BMobile%2Bfeed%2B1',
+        },
+        {
+          heading: 'APPLE iPhone 12 Pro (Pacific Blue, 128 GB) (Refurbished)',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTaHRwX_pCzBB4BIdgS8n36-o-DLhvmUkblyCDN6S2UgdUtllJ8YvXDJh6OBxSGmiKlaW9GNhYAlPuSdqNzpWe7A5TQC554AyLFQMmRx0cmoK_GNnlNdVqimg&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹35,649.00',
+          store: 'Housekeeping Enterprises',
+          storeLink:
+            'https://www.housekeepingenterprises.com/product/apple-iphone-12-pro-pacific-blue-128-gb-refurbished/',
+        },
+        {
+          heading: 'Apple iPhone 12 Pro 256GB Gold',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSP8jiSr04xyv676GQMHf-VI1T3PRbvkCbPb12enhW6MRzLYgp2BqJA1iFStuimmSWFJSk0i1_VCbntoi2NG3SXyP5-VQek_96q6b6N_fw&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹44,876.69 + tax',
+          store: 'eBay',
+          storeLink: 'https://www.ebay.com/itm/195959433665',
+        },
+        {
+          heading: 'Apple iPhone 14 Plus (128 GB, Starlight)',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQTWWYXGhVR4duy9q6xmIXUQo1a4kLX8h1ooiXwmPnc-SFB-cuy6r3wfWIZDUGIdkQ8OHEtYnSMJ3L2lA3z5v5XvG_97KmC6J6pAHdKqGMXEB6S9t8s3XwG&usqp=CAE',
+          description: 'Single SIM · 5G · iOS',
+          price: '₹80,199.00',
+          store: 'Lot Mobiles',
+          storeLink:
+            'https://www.lotmobiles.com/apple-iphone-14-plus-128-gb-starlight',
+        },
+        {
+          heading: 'Apple iPhone 7 Rosegold 256GB',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRTCsPW3vXRFs6-cjO35LMHF2cJ3xADN9oYsGA2L3Ya34jnzvUrjZPReZc6FRhaLDxb--Ky6TzCaUX1otntYzU7kEmNWS-VcWUczUVb56e2&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹10,999.00',
+          store: 'Tech Point',
+          storeLink:
+            'https://buy.techpoint.in/products/iphone-7-rosegold-256gb%3Fsku_id%3D46500543',
+        },
+        {
+          heading: '(Pre-Owned) Apple iPhone Xs (256GB) (Gold)',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT7JQDlrxcnGgdh24KeIk9-DMpuyr5rw5gsKxoARNEwfh0v4D7K6JPvwsOqimOOqebVHJFFgAIt1esKdYryUHExkgan7_FMTO7_kOt7wXKweN72hzZvUbIfjNY&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹26,990.00',
+          store: 'Elcytec',
+          storeLink:
+            'https://elcytec.com/product/pre-owned-apple-iphone-xs-256gb-gold/',
+        },
+        {
+          heading: 'Apple iPhone 5S - 16GB (Space Grey)',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRdE2Y3HbzzJwDUK-IUEjCNcW0nK533hAKF-3XmCe7Oqo7yELGXYJFKjqV5AIiSPMUpnUTefgcs4ufTKpqH0W_z_OymCFvCuDEZK5QUTPkh8T1wxoYAIjP3&usqp=CAE',
+          description: 'Smartphone · Single SIM · 4G',
+          price: '₹6,499.00',
+          store: 'evrycart',
+          storeLink:
+            'https://evrycart.com/products/refurbished-iphone-5s-16-gb%3Fvariant%3D41151965233342%26currency%3DINR%26utm_medium%3Dproduct_sync%26utm_source%3Dgoogle%26utm_content%3Dsag_organic%26utm_campaign%3Dsag_organic%26srsltid%3DAfmBOop-APkYKXp9eDxBG8cJTCcCK4OnOlsQv0uGHTN-ZNM-VRU5zN0ri6M',
+        },
+        {
+          heading: 'Apple iPhone XS 64 GB Gold',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTA0era2XevyU5jBppb_PnBAyQg0P0qXXei97MpPGnvqUUjEueLNwPU5LhKc9qa6rxhy8NrWOOrWzGi3ChIPExw_HGSBWtseHi4hjK71YmwwkqWY6_QrNWF&usqp=CAE',
+          description: 'Smartphone · Single SIM · 4G',
+          price: '₹24,990.00',
+          store: 'BadiyaBuy',
+          storeLink:
+            'https://badiyabuy.com/shop/smartphone/used-phones/apple-iphone-xs-64-gb-gold-silver-used-mobile-with-1-month-warranty-2/',
+        },
+        {
+          heading: 'New Apple iPhone 12 Pro Max (256GB) - Pacific Blue',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS-d8MNqZRLSp9WQYqsRKVKZUvEjbtqie-33QAJWjtOt4aDIu_RRLU0Y7kf-60HO-FeHyAokKz2Wlnc3wbqQaBKb6WmJuA5jWUJD_Pswaai&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹46,999.00',
+          store: 'Sahivalue.com',
+          storeLink:
+            'https://www.sahivalue.com/products/used-refurbished-apple-iphone-12-pro-max-256gb-085249/293890000026499113%3Fsrsltid%3DAfmBOoocl2cYPx3Y_xcn63CgCKxONq-RgLDcm46u5INRG_jrMSckmAm-UxU',
+        },
+        {
+          heading: 'Apple Iphone Xs Gold, 64 Gb',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTN6pdUWfokvrckgeKtKM9gQzmfH2bn5sX2UWd1J8-oaarwlU-8nImECP4pVBQVg_xH9ZBCd91qJ_M0syRl5L8Km-hg-Hx7rZb8UYZMskL-YE6O6RwCn7Zv&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹21,990.00',
+          store: 'Best of Indian Products',
+          storeLink:
+            'https://boip.in/mobiles/apple-iphone-xs-64gb-certified-refurbished-very-good%3Fsrsltid%3DAfmBOopT7iOfBIZrBwwZ7yTYU653oIFoPnQN6ZYvps8gS-Cwj7ALwvN7Rk8',
+        },
+        {
+          heading: 'Apple iPhone 11 (64GB) - Black',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTN-h2yB5J9795V5SSETDKEQRa-dmpFcZbV2r1Qn582aQAnW6PlSk14SkEbzj7HtSmIgJPcq8GPCkAtp7FxnCrgnFi87VuAxO1n01c8BEwvYK7RdC8rToeJ&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹22,999.00',
+          store: 'Mobilegoo Shop',
+          storeLink:
+            'https://mobilegoo.shop/products/apple-iphone-11%3Fvariant%3D47805462118716%26currency%3DINR%26utm_medium%3Dproduct_sync%26utm_source%3Dgoogle%26utm_content%3Dsag_organic%26utm_campaign%3Dsag_organic%26srsltid%3DAfmBOoru1P8Xcd8xVc1iN4WKVKIA0AhTWFK3phnpwY1xHoXqSqIKH9RxZYw',
+        },
+        {
+          heading: 'Apple Iphone 7 Silver, 32 Gb',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQmsrVbXkeeU2Zx-ZYDyCJCvEsNgAGTuxSza4qxFUT3pgo4bFv_9am-MFZ1h-nbvJkSI8p314cb-igBj9Hjml1ein1dkeqi5CreemOdS7T-t0IHjPr6Rivi&usqp=CAE',
+          description: 'Smartphone · Single SIM · 4G',
+          price: '₹14,999.00',
+          store: 'mnrmobiles.com',
+          storeLink:
+            'https://mnrmobiles.com/product/iphone-7-silver-32gb-price-in-india/%3Fsrsltid%3DAfmBOopKnrMr27C-LPHvaaPrLW0Y3kTMgZvmEckkNKo-wG-1etAG3Ra7o9Q',
+        },
+        {
+          heading:
+            'Apple Iphone 8 - 64GB - SILVER - NEW Condition - Refurbished - Buy & Get FREE GIFTS',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcThf63qRCbAeys_-E1J8kksFhjIXztX5Nps9DbcyhwvKsG2X3TSXe9TWZON6jjS7NLqI-Ae5lJoPpMTEt_3D__1g2vKSEHj6w&usqp=CAE',
+          description: 'Smartphone · Single SIM · 4G',
+          price: '₹11,999.00',
+          store: 'Zoneofdeals',
+          storeLink:
+            'https://zoneofdeals.com/product/apple-iphone-8-64gb-silver-edition-refurbished/',
+        },
+        {
+          heading:
+            '(Used) Apple iPhone 12 64GB Purple (Battery Health 84 %) (Pre-owned)',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRkeHHG1fcTSFhqRm6FKZB6o6J3eiSy2UJBjdS3tEXJtkDQs0fazr4f3VG1VegHyGBsEw-CVLT-xGMyKYQB6M8Blqmoo_Mm&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹26,999.00',
+          store: 'GameLoot',
+          storeLink:
+            'https://gameloot.in/shop/apple-iphone-12-64gb-purple-battery-health-84-pre-owned/',
+        },
+        {
+          heading: 'Apple Iphone X',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR9ePhm6BFEBfKq_e53Kvz0_M20Ds4tThHPi6zJrkpxycipmRrJesfb8JPRw7sap0wfeZXKfvfft_y16MkiRe-jbrThG9KpEEgysEyPWD3oSTz9rbTsQ1UotQ&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹21,999.00',
+          store: 'GoodsBucket',
+          storeLink: 'https://www.goodsbucket.com/product/apple-iphone-x/',
+        },
+        {
+          heading: 'iPhone 14 Blue 128GB',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTdSUi--CH3WH5gVlxFR1CuhK0mUMQ-RyJBkc-B9dVtn4Tm3eui8TRB4BwDdIxxc3S5WTuOVbQ-lPagDt4v-XmLABjxBKWOiP3EnaWIWt5P&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹48,000.00',
+          store: 'Tech Point',
+          storeLink:
+            'https://buy.techpoint.in/products/iphone-14-blue-128gb%3Fsku_id%3D46939173',
+        },
+        {
+          heading: 'Apple iPhone SE (64GB, Starlight)',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQxgd7-IFuG2qPXg0-p1tIgYEZkT3_7Y_qDVYJUoNiELnh1QfoJhwjd-7wluCR7jJj6EHqiKtoZXMWji2Vy_6-xQ-DXeQwyydKqb7s1G9JpLDndPPAC4X1JnA&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹49,900.00',
+          store: 'Apple',
+          storeLink:
+            'https://www.apple.com/in/shop/go/product/MMXG3%3Fcid%3Daos-in-seo-pla-iphone',
+        },
+        {
+          heading: 'APPLE IPHONE SE 128GB (PRODUCT)RED',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRXrN-9WdGn5V3TLGoiTmC2K_L5q8z6MI-itywLhIJMvoCg4EKKqGa9CIai5xMEHR78Uwu8L0LRxM8mQnN4tgpqYdBIKz_kbUl4VNe6dsrTbIopL8Uy9u3x6A&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹16,399.00',
+          store: 'Cashify',
+          storeLink:
+            'https://www.cashify.in/buy-refurbished-mobile-phones/renewed-apple-iphone-se-2/103578%3Fsrsltid%3DAfmBOorqwIpbLTi1gVO8cbwtyIUPDwykNdZlhXVxQI-SXdn-6002ij1-SvA',
+        },
+        {
+          heading:
+            'Apple iPhone 8 | RED Edition | 256GB | Excellent Condition Refurbished',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR_ofXUhfjVOmbpOkXZM23UqPdiFapLJ2Lwe0ZztDenWqwqcICjaWpN9IYgtA2PEtleJy52Jicz_iGRXzYnm5zvgB9Of70indq8bloDAgxdexTviimqmTzDmg&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹13,999.00',
+          store: 'Zoneofdeals',
+          storeLink:
+            'https://zoneofdeals.com/product/apple-iphone-8-red-edition-256-gb-excellent-condition-refurbished/',
+        },
+        {
+          heading: 'Apple iPhone SE (2020) (64 GB) Import (Color: Red)',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRcuUUHvchXiy9k4P2Sa42hfS_ga4Xa7Csa5T90bPWsXGG89BYUZyModH-fP6Is5JcahytYyn6pviFYOUz12YE7x7Ibg8xDa757pfpLlOhvZ5oKS7IyxRFj&usqp=CAE',
+          description: 'Smartphone · Single SIM · 4G',
+          price: '₹13,499.00',
+          store: 'xphonesmobiles.com',
+          storeLink:
+            'https://xphonesmobiles.com/product/refurbished-apple-iphone-se-2020-3-64-red/%3Fsrsltid%3DAfmBOorFoQI-47_XcB4047KLCNjA4qU6gv3RrSLjR4apTSn-sOeqEbsUBfo',
+        },
+        {
+          heading: 'Apple iPhone 14 Pro Max (128 GB, Silver)',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTE2SjMZdlsj8FsYpn-ncsp3N1BZk_kaGkgdPoPmky47Bz0fhIsxycIaeVVIODIQpxyitpPuahcE6ZOhzy7thZulZmt6caWV_yup1U4ob7MSdPLVGScfoD2XQ&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹1,39,900.00',
+          store: 'Arnav telecom',
+          storeLink:
+            'https://arnavtelecom.com/product/apple-iphone-14-pro-max/%3Fattribute_pa_color%3Dsilver%26attribute_pa_variant%3D128gb',
+        },
+        {
+          heading: 'Apple iPhone 13 Black 128GB',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRMVKDyyJwkK-ZLJUY4T9t7oaYKOg7rOT5-Cpp4rQr6WpYVmViY9uktKlk6y3VOIypanGMyC4ZU8kgA71MEFkutz1Fo6pHYOnkwmcTM0Yc&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹41,999.00',
+          store: 'Tech Point',
+          storeLink:
+            'https://buy.techpoint.in/products/iphone-13-black-128gb-2%3Fsku_id%3D46299289',
+        },
+        {
+          heading: 'Apple IPhone 7',
+          imgSrc:
+            'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSjpvGzyYVfnBGFOHXl1r3EOqDNoodfU1VbFekJ0DV7gbgpHNqDuqYG-FWuzCjjqSv-yAzwVqBEvNDjB9GPCXTvmjpt7KGjzFNeevvujG2tYxMSeU-uMpBg&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹12,999.00',
+          store: 'GoodsBucket',
+          storeLink: 'https://www.goodsbucket.com/product/apple-iphone-7/',
+        },
+        {
+          heading: 'Apple iPhone 15 Pro - 128 GB - Black Titanium',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQhiapLVd2fZDn9MAUArTIs_WX-8p6e-NlqnTKBFEbjHhIXXE7c-ysvIiUDwoOdQOXrNMgHRIgDZCB3VFgZ6HkRHZqpQm9vIR-plKiBzkhle0Eu9kMYqHCV_1A&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹1,34,900.00',
+          store: 'Poorvika',
+          storeLink:
+            'https://poorvika.com/apple-iphone-15-pro-black-titanium-128gb/p%3Fsrsltid%3DAfmBOoqRHL87pyMwPXMWc2maN48WlcW0Kzf_xls1u7Jx-XmWDXDw8hNhoOs',
+        },
+        {
+          heading: 'Refurbished Apple Iphone X 64 Gb |Superb Condition',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcR_3I4S2trzGXt2HJDffSOhE5JVNj2yMMO89nH0-ZBqdrZ6hxGPn-bJqwcOUj_jfT41KBmJ9EfMB8KzFsnL3fxdzgrv0WSY&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹22,499.00',
+          store: 'ShopClues.com',
+          storeLink:
+            'https://www.shopclues.com/refurbished-apple-iphone-x-64-gb-excellent-condition-153184500.html',
+        },
+        {
+          heading: 'APPLE iPhone 12 Refurbished (White, 128 GB)',
+          imgSrc:
+            'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRXvKpE7MV91FEFRCV3oM_On-BgTXh8pFrtX13WZopDZR7u_oPpetNXI6YbgUg7K_yIdcJySr1NgsfzLIKw5W1Qp1B55TKsVBCAurbl_5I&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 5G',
+          price: '₹34,999.00',
+          store: 'MobiBay.in',
+          storeLink:
+            'https://mobibay.in/product/apple-iphone-12-refurbished-white-128-gb/',
+        },
+        {
+          heading: 'Apple iPhone 13 Pro (Factory Unlocked)',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQrrDrH1LYvf9Pmv38qMZyWyLoITDE89WCms5lUbKzeMwv4xSlG7SKa6wxg_GpxpiLlaiV1obwywg9ptIhG0rt2S9UgKikshhxTZVeCSQoMUj_jHYDxPIJGcg&usqp=CAE',
+          description: 'Smartphone · Single SIM · 5G',
+          price: '₹61,120.79',
+          store: 'Max-Tech I.T Solutions',
+          storeLink:
+            'https://store.mtechitng.com/shop/apple-iphone-13-pro-factory-unlocked/',
+        },
+        {
+          heading: 'Apple iPhone 6 Plus (16GB)',
+          imgSrc:
+            'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRYZSYBFGT7dCMI7-fP_IO6VtOMNPOJxGOcfHpRYoJ_2bHAPCzIZsNOosslXL1l-XD4RSiCgNxcgA74NyM1uLCHudiM-72w8MS4n4a51MZrxTdGvg--iOl6&usqp=CAE',
+          description: 'Smartphone · Single SIM',
+          price: '₹7,999.00',
+          store: 'Cellbuddy',
+          storeLink: 'https://cellbuddy.in/buddy/store/apple-iphone-6-plus/',
+        },
+        {
+          heading: 'iPhone 11 64GB Green',
+          imgSrc:
+            'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQPW3H00MEYMjRpQVqmRE2LZ7x2oVswbU2UlDA4i-zb_zgt_5aJtTuxEAI5NHAhLdnSaqyXHNQncvGTxmaT2nW6MKkYEkpGWbJwpFU9VjbJRT3L7G69DeVMjg&usqp=CAE',
+          description: 'Smartphone · Dual SIM · 4G',
+          price: '₹20,527.31 + tax',
+          store: 'eBay',
+          storeLink: 'https://www.ebay.com/itm/285302066739',
+        },
+      ];
+
+      function displayData(dataToShow) {
+        const dataContainer = document.getElementById('data-container');
+        dataContainer.innerHTML = '';
+
+        dataToShow.forEach((item) => {
+          const div = document.createElement('div');
+          div.classList.add('card');
+
+          div.innerHTML = `
+          <h2>${item.heading}</h2>
+          <img class="c-phone-image" src="${item.imgSrc}" alt="${item.heading}" />
+          <p>Description: ${item.description}</p>
+          <p>Price: ${item.price}</p>
+          <p>Store: ${item.store}</p>
+          <p><a href="${item.storeLink}" target="_blank">Buy Now</a></p>
+        `;
+
+          dataContainer.appendChild(div);
+        });
+      }
+
+      displayData(data); // Display the data initially
+
+      // Event listener for sort select
+      document
+        .getElementById('sort-select')
+        .addEventListener('change', function (event) {
+          const sortBy = event.target.value;
+
+          if (sortBy === 'none') {
+            displayData(data); // Display the data in the original order
+          } else {
+            // Sort the data based on the selected option
+            data.sort((a, b) => {
+              if (sortBy === 'price') {
+                return getPriceValue(a.price) - getPriceValue(b.price);
+              } else if (sortBy === 'store') {
+                return a.store.localeCompare(b.store);
+              } else if (sortBy === 'heading') {
+                const aNumber = extractPhoneNumberinHeading(a.heading);
+                const bNumber = extractPhoneNumberinHeading(b.heading);
+                return aNumber - bNumber;
+              }
+            });
+
+            displayData(data); // Display the sorted data
+          }
+        });
+
+      // Function to convert price string to number (e.g., "$50" -> 50)
+      function getPriceValue(priceString) {
+        return parseFloat(priceString.replace(/[^\d.]/g, ''));
+      }
+
+      // Function to extract 'iPhone' plus the next number from the heading
+      function extractPhoneNumberinHeading(heading) {
+        const regex = /iPhone\s+(\d+)/i;
+        const match = heading.match(regex);
+        if (match) {
+          return parseInt(match[1]); // Extracted number
+        }
+        return 0; // If no match, consider 0
+      }
+    </script>
+  </body>
+</html>
